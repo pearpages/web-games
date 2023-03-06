@@ -2,23 +2,33 @@ import helloWorld from './hello-world';
 import treasureMap from './treasure-map';
 import canvasBasics from './canvas-basics';
 import canvasMovement from './canvas-movement';
+import canvasKeyboard from './canvas-keyboard';
 
 function clean() {
     document.body.innerHTML = '';
 }
 
-function createLink({ textContent, onClick }: { textContent: string, onClick?: () => void }) {
+const routeNames = [
+    'hello world',
+    'treasure map',
+    'canvas basics',
+    'canvas movement',
+    'canvas keyboard'
+];
+
+function createHref(textContent: string) {
+    return `/${textContent.toLowerCase().replace(' ', '-')}`
+}
+
+function createLink(textContent: string) {
     const link = document.createElement('a');
     link.textContent = textContent;
     link.style.display = 'block';
-    link.href = `/${textContent.toLowerCase().replace(' ', '-')}`;
+    link.href = createHref(textContent);
     return link;
 }
 
-document.body.appendChild(createLink({ textContent: 'hello world' }));
-document.body.appendChild(createLink({ textContent: 'treasure map' }));
-document.body.appendChild(createLink({ textContent: 'canvas basics' }));
-document.body.appendChild(createLink({ textContent: 'canvas movement' }));
+routeNames.forEach(name => document.body.appendChild(createLink(name)));
 
 function renderPage(
     page: () => void,
@@ -28,16 +38,19 @@ function renderPage(
 }
 
 switch (location.pathname) {
-    case '/hello-world':
+    case createHref(routeNames[0]):
         renderPage(helloWorld);
         break;
-    case '/treasure-map':
+    case createHref(routeNames[1]):
         renderPage(treasureMap);
         break;
-    case '/canvas-basics':
+    case createHref(routeNames[2]):
         renderPage(canvasBasics);
         break;
-    case '/canvas-movement':
+    case createHref(routeNames[3]):
         renderPage(canvasMovement);
+        break;
+    case createHref(routeNames[4]):
+        renderPage(canvasKeyboard);
         break;
 }
