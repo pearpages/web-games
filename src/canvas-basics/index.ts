@@ -1,13 +1,10 @@
-function createCanvas(appendTo: HTMLElement = document.body) {
-    const canvas = document.createElement('canvas');
-    canvas.id = 'canvas';
-    canvas.width = 400;
-    canvas.height = 400;
-    canvas.style.border = '1px solid black';
-    appendTo.appendChild(canvas);
+import { createCanvas as createDefaultCanvas } from '/src/shared/canvas'
+
+function createCanvas() {
+    const canvas = createDefaultCanvas();
 
     return {
-        getContext() { return canvas.getContext('2d') },
+        getContext() { return canvas.getContext() },
         drawSquare() {
             const ctx = this.getContext();
             ctx.fillStyle = 'red';
@@ -87,13 +84,7 @@ function createCanvas(appendTo: HTMLElement = document.body) {
 }
 
 function init() {
-    const fieldset = document.createElement('fieldset');
-    fieldset.style.display = 'inline-block';
-    const legend = document.createElement('legend');
-    legend.textContent = 'Canvas';
-    fieldset.appendChild(legend);
-    const canvas = createCanvas(fieldset);
-    document.body.appendChild(fieldset);
+    const canvas = createCanvas();
     return canvas;
 }
 
