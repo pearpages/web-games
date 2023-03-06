@@ -1,6 +1,6 @@
 import helloWorld from './hello-world';
 import treasureMap from './treasure-map';
-import canvas from './canvas';
+import canvas from './canvas-basics/index';
 
 function clean() {
     document.body.innerHTML = '';
@@ -16,7 +16,7 @@ function createLink({ textContent, onClick }: { textContent: string, onClick?: (
 
 document.body.appendChild(createLink({ textContent: 'hello world' }));
 document.body.appendChild(createLink({ textContent: 'treasure map' }));
-document.body.appendChild(createLink({ textContent: 'canvas' }));
+document.body.appendChild(createLink({ textContent: 'canvas basics' }));
 
 if (location.pathname === '/treasure-map') {
     clean();
