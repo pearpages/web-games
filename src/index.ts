@@ -1,5 +1,6 @@
 import helloWorld from './hello-world';
 import treasureMap from './treasure-map';
+import canvas from './canvas';
 
 function clean() {
     document.body.innerHTML = '';
@@ -9,16 +10,13 @@ function createLink({ textContent, onClick }: { textContent: string, onClick?: (
     const link = document.createElement('a');
     link.textContent = textContent;
     link.style.display = 'block';
-    link.onclick = () => {
-        clean();
-        onClick();
-    }
     link.href = `/${textContent.toLowerCase().replace(' ', '-')}`;
     return link;
 }
 
-document.body.appendChild(createLink({ textContent: 'hello world', onClick: helloWorld }));
-document.body.appendChild(createLink({ textContent: 'treasure map', onClick: treasureMap }));
+document.body.appendChild(createLink({ textContent: 'hello world' }));
+document.body.appendChild(createLink({ textContent: 'treasure map' }));
+document.body.appendChild(createLink({ textContent: 'canvas' }));
 
 if (location.pathname === '/treasure-map') {
     clean();
@@ -27,4 +25,8 @@ if (location.pathname === '/treasure-map') {
 if (location.pathname === '/hello-world') {
     clean();
     helloWorld();
+}
+if (location.pathname === '/canvas') {
+    clean();
+    canvas();
 }
