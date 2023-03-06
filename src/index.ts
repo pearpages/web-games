@@ -20,19 +20,24 @@ document.body.appendChild(createLink({ textContent: 'treasure map' }));
 document.body.appendChild(createLink({ textContent: 'canvas basics' }));
 document.body.appendChild(createLink({ textContent: 'canvas movement' }));
 
-if (location.pathname === '/treasure-map') {
+function renderPage(
+    page: () => void,
+) {
     clean();
-    treasureMap();
+    page();
 }
-if (location.pathname === '/hello-world') {
-    clean();
-    helloWorld();
-}
-if (location.pathname === '/canvas-basics') {
-    clean();
-    canvasBasics();
-}
-if (location.pathname === '/canvas-movement') {
-    clean();
-    canvasMovement();
+
+switch (location.pathname) {
+    case '/hello-world':
+        renderPage(helloWorld);
+        break;
+    case '/treasure-map':
+        renderPage(treasureMap);
+        break;
+    case '/canvas-basics':
+        renderPage(canvasBasics);
+        break;
+    case '/canvas-movement':
+        renderPage(canvasMovement);
+        break;
 }
