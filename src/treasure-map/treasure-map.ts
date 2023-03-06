@@ -28,6 +28,13 @@ const options = {
     }
 }
 
+function showHeatMapButton(onclick: (removeButton: () => void) => void): void {
+    const button = document.createElement('button');
+    button.innerText = 'Show heat map';
+    button.onclick = () => onclick(() => button.remove());
+    document.body.appendChild(button);
+}
+
 export default function game() {
     const createClick = createClickFactory({ create: createDiv, size: options.zoom });
     const createMap = createMapFactory(createDiv);
@@ -76,5 +83,9 @@ export default function game() {
     });
     render(map.getElement());
     score.init();
-    // createHeatMap({ options, treasure, render, createClick, offset: { x: 301, y: 0 } });
+    showHeatMapButton((removeButton: () => void) => {
+        createHeatMap({ options, treasure, render, createClick, offset: { x: 301, y: 0 } });
+        removeButton()
+    });
+
 }
