@@ -1,3 +1,8 @@
 {
-    "json.format.enable": false
+    "json.format.enable": false,
+    "editor.formatOnSave": true,
+    "typescript.format.enable": true,
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
 }

@@ -3,6 +3,7 @@ import treasureMap from './treasure-map';
 import canvasBasics from './canvas-basics';
 import canvasMovement from './canvas-movement';
 import canvasKeyboard from './canvas-keyboard';
+import snake from './snake';
 
 function clean() {
     document.body.innerHTML = '';
@@ -13,7 +14,8 @@ const routeNames = [
     'treasure map',
     'canvas basics',
     'canvas movement',
-    'canvas keyboard'
+    'canvas keyboard',
+    'snake'
 ];
 
 function createHref(textContent: string) {
@@ -52,5 +54,8 @@ switch (location.pathname) {
         break;
     case createHref(routeNames[4]):
         renderPage(canvasKeyboard);
+        break;
+    case createHref(routeNames[5]):
+        renderPage(snake);
         break;
 }
