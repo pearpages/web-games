@@ -1,7 +1,7 @@
 import createMapFactory from "./map";
 import createHeatMap from "./heat-map";
 import DOM from "./dom";
-import createClickFactory from "./click";
+import getCreateClick from "./getCreateClick";
 import type { Point, Event } from "./models";
 import { getRandomPoint, getTemperature } from "./math";
 
@@ -39,10 +39,7 @@ function showHeatMapButton(onclick: (removeButton: () => void) => void): void {
 }
 
 export default function game() {
-  const createClick = createClickFactory({
-    create: DOM.createDiv,
-    size: options.zoom,
-  });
+  const createClick = getCreateClick(options.zoom);
   const createMap = createMapFactory(DOM.createDiv);
 
   const treasure = getRandomPoint({
