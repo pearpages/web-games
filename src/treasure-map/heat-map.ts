@@ -1,10 +1,10 @@
 import type { Point } from "./models";
 import getTemperature from "./getTemperature";
+import DOM from "./dom";
 
 type Options = {
   treasure: Point;
   options: any;
-  render: any;
   createClick: any;
   offset: Point;
 };
@@ -12,7 +12,6 @@ type Options = {
 export default function renderHeatMap({
   treasure,
   options,
-  render,
   createClick,
   offset,
 }: Options) {
@@ -20,7 +19,7 @@ export default function renderHeatMap({
     for (let x = 0; x < options.size; x++) {
       const point = options.toScreen({ x, y }, offset);
       const treasurePoint = options.toScreen(treasure, offset);
-      render(
+      DOM.append(
         createClick({
           point,
           temperature: getTemperature(treasurePoint, point),

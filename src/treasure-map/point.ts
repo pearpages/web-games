@@ -1,10 +1,13 @@
 import type { Point } from "./models";
-import math from "./math";
 
 function getDistance(a: Point, b: Point): number {
   const x = a.x - b.x;
   const y = a.y - b.y;
   return Math.sqrt(x ** 2 + y ** 2);
+}
+
+function getRandomNumber(size: number): number {
+  return Math.floor(Math.random() * size);
 }
 
 function getRandomPoint({
@@ -15,8 +18,8 @@ function getRandomPoint({
   bottom: number;
 }): Point {
   return {
-    x: math.getRandomNumber(right),
-    y: math.getRandomNumber(bottom),
+    x: getRandomNumber(right),
+    y: getRandomNumber(bottom),
   };
 }
 

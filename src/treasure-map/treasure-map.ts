@@ -108,7 +108,6 @@ export default function game() {
     createHeatMap({
       options,
       treasure,
-      render: DOM.append,
       createClick,
       offset: { x: 301, y: 0 },
     });
