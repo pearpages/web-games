@@ -1,8 +1,10 @@
-type CreateDiv = (doMagic?: (div: HTMLDivElement) => void) => HTMLDivElement;
+type CreateDiv = (
+  changeElement?: (div: HTMLDivElement) => void
+) => HTMLDivElement;
 
-const createDiv: CreateDiv = (doMagic) => {
+const createDiv: CreateDiv = (changeElement) => {
   const div = document.createElement("div");
-  if (doMagic) doMagic(div);
+  if (changeElement) changeElement(div);
   return div;
 };
 

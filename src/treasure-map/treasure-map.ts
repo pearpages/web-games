@@ -1,10 +1,10 @@
 import createMap from "./createMap";
-import createHeatMap from "./heat-map";
+import createHeatMap from "./renderHeatMap";
 import DOM from "./dom";
 import createClick from "./createClick";
 import type { Event } from "./models";
-import getTemperature from "./getTemperature";
-import point from "./point";
+import getColorFromDistance from "./getColorFromDistance";
+import Point from "./point";
 import options from "./options";
 
 function showHeatMapButton(onclick: (removeButton: () => void) => void): void {
@@ -15,7 +15,7 @@ function showHeatMapButton(onclick: (removeButton: () => void) => void): void {
 }
 
 export default function game() {
-  const treasure = point.getRandomPoint({
+  const treasure = Point.getRandomPoint({
     right: options.size,
     bottom: options.size,
   });
@@ -46,7 +46,7 @@ export default function game() {
       if (won) {
         return;
       }
-      const clickedPoint = point.normalize(point.toPoint(event));
+      const clickedPoint = Point.normalize(Point.toPoint(event));
       score.totalClicks++;
       if (treasure.x === clickedPoint.x && treasure.y === clickedPoint.y) {
         alert("You found the treasure!");
@@ -59,24 +59,16 @@ export default function game() {
           })
         );
       }
-      const temperature = getTemperature(treasure, clickedPoint);
-      DOM.append(
-        createClick({
-          point: point.toScreen(clickedPoint),
-          temperature,
-        })
-      );
+      const point = Point.toScreen(clickedPoint);
+      point.color = getColorFromDistance(treasure, clickedPoint);
+
+      DOM.append(createClick(point));
       score.reRender();
     })
   );
   score.init();
   showHeatMapButton((removeButton: () => void) => {
-    createHeatMap({
-      options,
-      treasure,
-      createClick,
-      offset: { x: 301, y: 0 },
-    });
+    createHeatMap(treasure);
     removeButton();
   });
 }

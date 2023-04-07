@@ -1,16 +1,7 @@
-import type { Temperature } from "./models";
+import type { Temperature, Color, Point } from "./models";
+import getTemperature from "./getTemperature";
 
-type Color =
-  | "gold"
-  | "red"
-  | "orange"
-  | "yellow"
-  | "green"
-  | "blue"
-  | "indigo"
-  | "black";
-
-export default function getColor(temperature: Temperature): Color {
+function getColor(temperature: Temperature): Color {
   switch (temperature) {
     case "Treasure!":
       return "gold";
@@ -29,4 +20,8 @@ export default function getColor(temperature: Temperature): Color {
     case "Freezing!":
       return "black";
   }
+}
+
+export default function getColorFromDistance(a: Point, b: Point): Color {
+  return getColor(getTemperature(a, b));
 }

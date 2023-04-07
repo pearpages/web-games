@@ -4,9 +4,9 @@ import options from "./options";
 
 const size = options.size * options.zoom;
 
-export default function createMap(
-  onClick: (event: Event) => void
-): HTMLDivElement {
+type HandleClick = (event: Event) => void;
+
+export default function createMap(onClick: HandleClick): HTMLDivElement {
   return DOM.createDiv((div) => {
     div.style.borderRight = "1px solid black";
     div.style.borderBottom = "1px solid black";
