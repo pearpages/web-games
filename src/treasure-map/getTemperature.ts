@@ -1,7 +1,10 @@
 import type { Point, Temperature } from "./models";
 import point from "./point";
+import options from "./options";
 
-function augmentPoint({ x, y }: Point, zoom: number): Point {
+const { zoom } = options;
+
+function augmentPoint({ x, y }: Point): Point {
   return {
     x: x * zoom,
     y: y * zoom,
@@ -28,12 +31,6 @@ function getDistanceHint(distance: number): Temperature {
   }
 }
 
-export default function getTemperature(
-  a: Point,
-  b: Point,
-  zoom = 1
-): Temperature {
-  return getDistanceHint(
-    point.getDistance(augmentPoint(a, zoom), augmentPoint(b, zoom))
-  );
+export default function getTemperature(a: Point, b: Point): Temperature {
+  return getDistanceHint(point.getDistance(augmentPoint(a), augmentPoint(b)));
 }

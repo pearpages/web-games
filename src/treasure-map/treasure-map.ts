@@ -1,36 +1,11 @@
 import createMap from "./createMap";
 import createHeatMap from "./heat-map";
 import DOM from "./dom";
-import getCreateClick from "./getCreateClick";
-import type { Point, Event } from "./models";
+import createClick from "./createClick";
+import type { Event } from "./models";
 import getTemperature from "./getTemperature";
 import point from "./point";
-
-const options = {
-  zoom: 6,
-  size: 50,
-  toScreen(
-    { x, y }: Point,
-    { x: offsetX, y: offsetY } = { x: 0, y: 0 }
-  ): Point {
-    if (x === 0) {
-      return { x: x + offsetX, y: y * this.zoom + offsetY };
-    }
-    if (y === 0) {
-      return { x: x * this.zoom + offsetX, y: y + offsetY };
-    }
-    return { x: x * this.zoom + offsetX, y: y * this.zoom + offsetY };
-  },
-  normalize({ x, y }: Point): Point {
-    return { x: Math.floor(x / this.zoom), y: Math.floor(y / this.zoom) };
-  },
-  toPoint(event: Event): Point {
-    return {
-      x: event.offsetX,
-      y: event.offsetY,
-    };
-  },
-};
+import options from "./options";
 
 function showHeatMapButton(onclick: (removeButton: () => void) => void): void {
   const button = document.createElement("button");
@@ -40,8 +15,6 @@ function showHeatMapButton(onclick: (removeButton: () => void) => void): void {
 }
 
 export default function game() {
-  const createClick = getCreateClick(options.zoom);
-
   const treasure = point.getRandomPoint({
     right: options.size,
     bottom: options.size,
@@ -69,38 +42,31 @@ export default function game() {
   };
 
   DOM.append(
-    createMap({
-      size: options.size * options.zoom,
-      onClick: (event: Event) => {
-        if (won) {
-          return;
-        }
-        const clickedPoint = options.normalize(options.toPoint(event));
-        score.totalClicks++;
-        if (treasure.x === clickedPoint.x && treasure.y === clickedPoint.y) {
-          alert("You found the treasure!");
-          won = true;
-          DOM.append(
-            DOM.createDiv((div) => {
-              div.innerText = "You won!";
-              div.style.fontSize = "30px";
-              div.style.color = "red";
-            })
-          );
-        }
-        const temperature = getTemperature(
-          treasure,
-          clickedPoint,
-          options.zoom
-        );
+    createMap((event: Event) => {
+      if (won) {
+        return;
+      }
+      const clickedPoint = point.normalize(point.toPoint(event));
+      score.totalClicks++;
+      if (treasure.x === clickedPoint.x && treasure.y === clickedPoint.y) {
+        alert("You found the treasure!");
+        won = true;
         DOM.append(
-          createClick({
-            point: options.toScreen(clickedPoint),
-            temperature,
-          }).getElement()
+          DOM.createDiv((div) => {
+            div.innerText = "You won!";
+            div.style.fontSize = "30px";
+            div.style.color = "red";
+          })
         );
-        score.reRender();
-      },
+      }
+      const temperature = getTemperature(treasure, clickedPoint);
+      DOM.append(
+        createClick({
+          point: point.toScreen(clickedPoint),
+          temperature,
+        })
+      );
+      score.reRender();
     })
   );
   score.init();
