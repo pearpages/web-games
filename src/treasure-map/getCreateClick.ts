@@ -1,5 +1,4 @@
-import type { Point, Element } from "./models";
-import type { Temperature } from "./math";
+import type { Point, Element, Temperature } from "./models";
 import DOM from "./dom";
 import getColor from "./getColor";
 

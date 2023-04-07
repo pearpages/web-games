@@ -3,7 +3,8 @@ import createHeatMap from "./heat-map";
 import DOM from "./dom";
 import getCreateClick from "./getCreateClick";
 import type { Point, Event } from "./models";
-import { getRandomPoint, getTemperature } from "./math";
+import getTemperature from "./getTemperature";
+import point from "./point";
 
 const options = {
   zoom: 6,
@@ -41,7 +42,7 @@ function showHeatMapButton(onclick: (removeButton: () => void) => void): void {
 export default function game() {
   const createClick = getCreateClick(options.zoom);
 
-  const treasure = getRandomPoint({
+  const treasure = point.getRandomPoint({
     right: options.size,
     bottom: options.size,
   });
