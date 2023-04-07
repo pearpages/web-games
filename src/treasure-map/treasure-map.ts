@@ -1,4 +1,4 @@
-import createMapFactory from "./map";
+import createMap from "./createMap";
 import createHeatMap from "./heat-map";
 import DOM from "./dom";
 import getCreateClick from "./getCreateClick";
@@ -40,7 +40,6 @@ function showHeatMapButton(onclick: (removeButton: () => void) => void): void {
 
 export default function game() {
   const createClick = getCreateClick(options.zoom);
-  const createMap = createMapFactory(DOM.createDiv);
 
   const treasure = getRandomPoint({
     right: options.size,
@@ -68,36 +67,41 @@ export default function game() {
     },
   };
 
-  const map = createMap({
-    size: options.size * options.zoom,
-    onClick: (event: Event) => {
-      if (won) {
-        return;
-      }
-      const clickedPoint = options.normalize(options.toPoint(event));
-      score.totalClicks++;
-      if (treasure.x === clickedPoint.x && treasure.y === clickedPoint.y) {
-        alert("You found the treasure!");
-        won = true;
-        DOM.append(
-          DOM.createDiv((div) => {
-            div.innerText = "You won!";
-            div.style.fontSize = "30px";
-            div.style.color = "red";
-          })
+  DOM.append(
+    createMap({
+      size: options.size * options.zoom,
+      onClick: (event: Event) => {
+        if (won) {
+          return;
+        }
+        const clickedPoint = options.normalize(options.toPoint(event));
+        score.totalClicks++;
+        if (treasure.x === clickedPoint.x && treasure.y === clickedPoint.y) {
+          alert("You found the treasure!");
+          won = true;
+          DOM.append(
+            DOM.createDiv((div) => {
+              div.innerText = "You won!";
+              div.style.fontSize = "30px";
+              div.style.color = "red";
+            })
+          );
+        }
+        const temperature = getTemperature(
+          treasure,
+          clickedPoint,
+          options.zoom
         );
-      }
-      const temperature = getTemperature(treasure, clickedPoint, options.zoom);
-      DOM.append(
-        createClick({
-          point: options.toScreen(clickedPoint),
-          temperature,
-        }).getElement()
-      );
-      score.reRender();
-    },
-  });
-  DOM.append(map.getElement());
+        DOM.append(
+          createClick({
+            point: options.toScreen(clickedPoint),
+            temperature,
+          }).getElement()
+        );
+        score.reRender();
+      },
+    })
+  );
   score.init();
   showHeatMapButton((removeButton: () => void) => {
     createHeatMap({

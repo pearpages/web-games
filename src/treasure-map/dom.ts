@@ -1,6 +1,6 @@
-type CreateElement = (doMagic: (div: HTMLDivElement) => void) => HTMLDivElement;
+type CreateDiv = (doMagic: (div: HTMLDivElement) => void) => HTMLDivElement;
 
-const createDiv: CreateElement = (doMagic) => {
+const createDiv: CreateDiv = (doMagic) => {
   const div = document.createElement("div");
   doMagic(div);
   return div;
@@ -11,4 +11,4 @@ function append(element: HTMLElement) {
 }
 
 export default { createDiv, append };
-export type { CreateElement };
+export type { CreateDiv };
