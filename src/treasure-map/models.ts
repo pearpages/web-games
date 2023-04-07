@@ -1,12 +1,22 @@
-type Point = {
-    x: number;
-    y: number;
-}
+type Temperature =
+  | "Treasure!"
+  | "Boiling hot!"
+  | "Really hot"
+  | "Hot"
+  | "Warm"
+  | "Cold"
+  | "Really cold"
+  | "Freezing!";
 
-type Event = { offsetX: number, offsetY: number }
+type Point = {
+  x: number;
+  y: number;
+};
+
+type Event = { offsetX: number; offsetY: number };
 
 interface Element {
-    getElement(): HTMLElement;
+  getElement(): HTMLElement;
 }
 
-export type { Point, Element, Event };
+export type { Temperature, Point, Element, Event };
