@@ -3,7 +3,7 @@ import DOM from "./dom";
 import createClick from "./createClick";
 import getColor from "./getColor";
 import options from "./options";
-import Point from "./point";
+import Point from "./Point";
 
 const { size } = options;
 const offset: PointType = { x: options.size * options.zoom, y: 0 };

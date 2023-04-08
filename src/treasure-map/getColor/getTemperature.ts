@@ -1,5 +1,5 @@
-import type { Point, Temperature } from "../models";
-import point from "../point";
+import type { Point as PointType, Temperature } from "../models";
+import Point from "../Point";
 
 function getDistanceHint(distance: number): Temperature {
   if (distance === 0) {
@@ -21,6 +21,9 @@ function getDistanceHint(distance: number): Temperature {
   }
 }
 
-export default function getTemperature(a: Point, b: Point): Temperature {
-  return getDistanceHint(point.getDistance(a, b));
+export default function getTemperature(
+  a: PointType,
+  b: PointType
+): Temperature {
+  return getDistanceHint(Point.getDistance(a, b));
 }

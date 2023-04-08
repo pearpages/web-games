@@ -4,7 +4,7 @@ import DOM from "./dom";
 import createClick from "./createClick";
 import type { Event } from "./models";
 import getColor from "./getColor";
-import Point from "./point";
+import Point from "./Point";
 import type { Point as PointType } from "./models";
 import options from "./options";
 import createScore from "./createScore";
@@ -49,7 +49,7 @@ export default function game() {
       if (won) {
         return;
       }
-      const clickedPoint = Point.normalize(Point.toPoint(event));
+      const clickedPoint = Point.fromEvent(event);
       renderClickedPoint(clickedPoint, treasure);
       score.updateScore();
       if (hasWonTheGame(clickedPoint, treasure)) {
