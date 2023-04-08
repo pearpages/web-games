@@ -1,6 +1,6 @@
 import type { Point as PointType } from "./models";
 import options from "./options";
-import DOM from "./dom";
+import DOM from "/src/shared/dom";
 
 const defaultSize = options.zoom;
 

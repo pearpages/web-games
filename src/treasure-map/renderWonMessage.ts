@@ -1,4 +1,4 @@
-import DOM from "./dom";
+import DOM from "/src/shared/dom";
 
 export default function renderWonMessage() {
   DOM.append(

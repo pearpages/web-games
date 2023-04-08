@@ -1,5 +1,5 @@
 import type { Event } from "./models";
-import DOM from "./dom";
+import DOM from "/src/shared/dom";
 import options from "./options";
 
 const size = options.size * options.zoom;

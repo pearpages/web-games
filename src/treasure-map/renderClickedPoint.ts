@@ -1,8 +1,7 @@
 import type { Point as PointType } from "./models";
 import Point from "./Point";
 import getColor from "./getColor";
-import DOM from "./dom";
-import options from "./options";
+import DOM from "/src/shared/dom";
 import createClick from "./createClick";
 
 export default function renderClickedPoint(

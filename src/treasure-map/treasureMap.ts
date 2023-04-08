@@ -1,6 +1,6 @@
 import createMap from "./createMap";
 import heatMap from "./renderHeatMap";
-import DOM from "./dom";
+import DOM from "/src/shared/dom";
 import renderClickedPoint from "./renderClickedPoint";
 import type { Event } from "./models";
 import Point from "./Point";

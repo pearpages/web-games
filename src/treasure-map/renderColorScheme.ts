@@ -1,5 +1,5 @@
 import createClick from "./createClick";
-import DOM from "./dom";
+import DOM from "/src/shared/dom";
 import getColorFromDistance from "./getColor";
 import type { Color } from "./models";
 import options from "./options";
