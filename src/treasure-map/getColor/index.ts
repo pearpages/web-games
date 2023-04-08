@@ -1,4 +1,4 @@
-import type { Temperature, Color, Point } from "./models";
+import type { Temperature, Color, Point } from "../models";
 import getTemperature from "./getTemperature";
 
 function getColor(temperature: Temperature): Color {

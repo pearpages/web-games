@@ -1,5 +1,5 @@
-import type { Point, Temperature } from "./models";
-import point from "./point";
+import type { Point, Temperature } from "../models";
+import point from "../point";
 
 function getDistanceHint(distance: number): Temperature {
   if (distance === 0) {

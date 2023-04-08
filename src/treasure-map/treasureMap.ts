@@ -1,45 +1,48 @@
 import createMap from "./createMap";
-import createHeatMap from "./renderHeatMap";
+import heatMap from "./renderHeatMap";
 import DOM from "./dom";
 import createClick from "./createClick";
 import type { Event } from "./models";
-import getColorFromDistance from "./getColorFromDistance";
+import getColor from "./getColor";
 import Point from "./point";
+import type { Point as PointType } from "./models";
 import options from "./options";
+import createScore from "./createScore";
 
-function showHeatMapButton(onclick: (removeButton: () => void) => void): void {
-  const button = document.createElement("button");
-  button.innerText = "Show heat map";
-  button.onclick = () => onclick(() => button.remove());
-  document.body.appendChild(button);
-}
-
-export default function game() {
-  const treasure = Point.getRandomPoint({
+function createTreasure() {
+  return Point.getRandomPoint({
     right: options.size,
     bottom: options.size,
   });
+}
 
+function renderWonMessage() {
+  DOM.append(
+    DOM.createDiv((div) => {
+      div.innerText = "You won!";
+      div.style.fontSize = "30px";
+      div.style.color = "red";
+    })
+  );
+}
+
+function renderClickedPoint(
+  clickedPoint: PointType,
+  treasure: PointType
+): void {
+  const point = Point.toScreen(clickedPoint);
+  point.color = getColor(treasure, clickedPoint);
+  DOM.append(createClick(point));
+}
+
+function hasWonTheGame(clickedPoint: PointType, treasure: PointType) {
+  return treasure.x === clickedPoint.x && treasure.y === clickedPoint.y;
+}
+
+export default function game() {
+  const treasure = createTreasure();
   let won = false;
-
-  const score = {
-    id: "score",
-    totalClicks: 0,
-    getScoreText() {
-      return `Total clicks: ${this.totalClicks}`;
-    },
-    init() {
-      DOM.append(
-        DOM.createDiv((div) => {
-          div.id = this.id;
-          div.innerText = this.getScoreText();
-        })
-      );
-    },
-    reRender() {
-      document.getElementById(this.id).innerText = this.getScoreText();
-    },
-  };
+  const score = createScore();
 
   DOM.append(
     createMap((event: Event) => {
@@ -47,28 +50,15 @@ export default function game() {
         return;
       }
       const clickedPoint = Point.normalize(Point.toPoint(event));
-      score.totalClicks++;
-      if (treasure.x === clickedPoint.x && treasure.y === clickedPoint.y) {
+      renderClickedPoint(clickedPoint, treasure);
+      score.updateScore();
+      if (hasWonTheGame(clickedPoint, treasure)) {
         alert("You found the treasure!");
         won = true;
-        DOM.append(
-          DOM.createDiv((div) => {
-            div.innerText = "You won!";
-            div.style.fontSize = "30px";
-            div.style.color = "red";
-          })
-        );
+        renderWonMessage();
       }
-      const point = Point.toScreen(clickedPoint);
-      point.color = getColorFromDistance(treasure, clickedPoint);
-
-      DOM.append(createClick(point));
-      score.reRender();
     })
   );
   score.init();
-  showHeatMapButton((removeButton: () => void) => {
-    createHeatMap(treasure);
-    removeButton();
-  });
+  heatMap.showButton(treasure);
 }
