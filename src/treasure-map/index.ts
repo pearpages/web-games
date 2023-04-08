@@ -1,1 +1,1 @@
-export { default } from './treasure-map';
+export { default } from "./treasureMap";

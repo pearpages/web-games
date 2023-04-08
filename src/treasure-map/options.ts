@@ -1,6 +1,6 @@
 const options = {
-  zoom: 6,
-  size: 50,
+  zoom: 18,
+  size: 30,
 };
 
 export default options;
