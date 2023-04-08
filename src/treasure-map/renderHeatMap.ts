@@ -1,9 +1,6 @@
 import type { Point as PointType } from "./models";
-import DOM from "./dom";
-import createClick from "./createClick";
-import getColor from "./getColor";
+import renderClickedPoint from "./renderClickedPoint";
 import options from "./options";
-import Point from "./Point";
 
 const { size } = options;
 const offset: PointType = { x: options.size * options.zoom, y: 0 };
@@ -11,9 +8,7 @@ const offset: PointType = { x: options.size * options.zoom, y: 0 };
 function renderHeatMap(treasure: PointType): void {
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size; x++) {
-      const point = Point.toScreen({ x, y }, offset);
-      point.color = getColor(treasure, { x, y });
-      DOM.append(createClick(point));
+      renderClickedPoint({ x, y }, treasure, offset);
     }
   }
 }

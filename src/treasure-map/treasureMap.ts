@@ -1,39 +1,14 @@
 import createMap from "./createMap";
 import heatMap from "./renderHeatMap";
 import DOM from "./dom";
-import createClick from "./createClick";
+import renderClickedPoint from "./renderClickedPoint";
 import type { Event } from "./models";
-import getColor from "./getColor";
 import Point from "./Point";
 import type { Point as PointType } from "./models";
-import options from "./options";
+import createTreasure from "./createTreasure";
 import createScore from "./createScore";
-
-function createTreasure() {
-  return Point.getRandomPoint({
-    right: options.size,
-    bottom: options.size,
-  });
-}
-
-function renderWonMessage() {
-  DOM.append(
-    DOM.createDiv((div) => {
-      div.innerText = "You won!";
-      div.style.fontSize = "30px";
-      div.style.color = "red";
-    })
-  );
-}
-
-function renderClickedPoint(
-  clickedPoint: PointType,
-  treasure: PointType
-): void {
-  const point = Point.toScreen(clickedPoint);
-  point.color = getColor(treasure, clickedPoint);
-  DOM.append(createClick(point));
-}
+import renderWonMessage from "./renderWonMessage";
+import renderColorScheme from "./renderColorScheme";
 
 function hasWonTheGame(clickedPoint: PointType, treasure: PointType) {
   return treasure.x === clickedPoint.x && treasure.y === clickedPoint.y;
@@ -60,5 +35,6 @@ export default function game() {
     })
   );
   score.init();
+  renderColorScheme();
   heatMap.showButton(treasure);
 }

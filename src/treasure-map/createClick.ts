@@ -1,12 +1,20 @@
-import type { Point } from "./models";
-import DOM from "./dom";
+import type { Point as PointType } from "./models";
 import options from "./options";
+import DOM from "./dom";
 
-const size = options.zoom;
+const defaultSize = options.zoom;
 
-export default function createClick(point: Point): HTMLDivElement {
+export default function createClick(
+  point: PointType,
+  size = defaultSize,
+  position = "absolute",
+  display?: string
+): HTMLDivElement {
   return DOM.createDiv((div) => {
-    div.style.position = "absolute";
+    if (display) {
+      div.style.display = display;
+    }
+    div.style.position = position;
     div.style.left = `${point.x}px`;
     div.style.top = `${point.y}px`;
     div.style.width = `${size}px`;
