@@ -1,5 +1,6 @@
 import createButtons from "./createButtons";
 import createHelloWorld from "./createHelloWorld";
+import DOM from "/src/shared/dom";
 
 function main() {
   const hello = createHelloWorld("hello");
@@ -10,8 +11,8 @@ function main() {
     { innerText: "Down", onClick: hello.moveDown },
   ]);
 
-  document.body.appendChild(hello.element);
-  buttons.forEach((button) => document.body.appendChild(button));
+  DOM.append(hello.element);
+  buttons.forEach((button) => DOM.append(button));
 }
 
 export default main;
