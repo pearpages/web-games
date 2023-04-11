@@ -1,14 +1,3 @@
-var simpleLevelPlan = `
-......................
-..#................#..
-..#..............=.#..
-..#.........o.o....#..
-..#.@......#####...#..
-..#####............#..
-......#++++++++++++#..
-......##############..
-......................`;
-
 var Level = class Level {
   constructor(plan) {
     let rows = plan
@@ -129,8 +118,6 @@ var levelChars = {
   "|": Lava,
   v: Lava,
 };
-
-var simpleLevel = new Level(simpleLevelPlan);
 
 function elt(name, attrs, ...children) {
   let dom = document.createElement(name);
