@@ -1,4 +1,5 @@
 {
+  "include": ["./declaration.d.ts"],
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
@@ -7,7 +8,7 @@
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
     "module": "Node16",
-    "target": "es5",
+    "target": "ES2015",
     "allowJs": true
   },
   "files": ["src/index.ts"]
