@@ -1,5 +1,6 @@
 import "./game.scss";
-import { runGame, DOMDisplay } from "./game";
+import DOMDisplay from "./DOMDisplay";
+import runGame from "./game";
 import GAME_LEVELS from "./levels";
 
 export default function () {
