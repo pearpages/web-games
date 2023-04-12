@@ -1,4 +1,4 @@
-import type { IActor, ILevel, IState } from "./types";
+import type { IActor, ILevel, IState, Keys } from "./types";
 
 function overlap(actor1: IActor, actor2: IActor): boolean {
   return (
@@ -24,7 +24,7 @@ class State implements IState {
     return this.actors.find((a) => a.type == "player");
   }
 
-  update(time: number, keys: string[]): IState {
+  update(time: number, keys: Keys): IState {
     const actors: IActor[] = this.actors.map((actor) =>
       actor.update(time, this, keys)
     );

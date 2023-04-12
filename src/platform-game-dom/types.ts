@@ -5,45 +5,72 @@ interface IVec {
   times(factor: number): IVec;
 }
 
-interface IActor {
-  pos: {
-    x: number;
-    y: number;
-  };
-  size: {
-    x: number;
-    y: number;
-  };
-  type: string;
+interface IUpdate<T> {
+  update(time: number, ...extraParams: unknown[]): T;
+}
+
+interface IActor extends IUpdate<IActor> {
+  pos: IVec;
+  size: IVec;
+  type: "lava" | "coin" | "player";
   collide(state: IState): IState;
-  update(time: number, state: IState, keys: string[]): IActor;
 }
 
 interface ILevel {
+  height: number;
+  width: number;
   startActors: IActor[];
-  touches(
-    pos: { x: number; y: number },
-    size: { x: number; y: number },
-    type: string
-  ): boolean;
+  rows: GameElement[][];
+  touches(pos: IVec, size: IVec, type: "wall" | "lava"): boolean;
 }
 
-interface IState {
+interface IState extends IUpdate<IState> {
   level: ILevel;
   actors: IActor[];
   status: "playing" | "won" | "lost";
   player: IActor;
-  update(time: number, keys: string[]): IState;
+  update(time: number, keys: Keys): IState;
 }
 
-interface ICoin {
-  pos: IVec;
+interface ICoin extends IActor {
   basePos: IVec;
   wobble: number;
   type: "coin";
-  size: IVec;
   update(time: number): ICoin;
-  collide(state: IState): IState;
 }
 
-export type { IVec, IActor, ILevel, IState, ICoin };
+interface ILava extends IActor {
+  speed: IVec;
+  reset?: IVec;
+  type: "lava";
+  update(time: number, state: IState): ILava;
+}
+
+interface IPlayer extends IActor {
+  type: "player";
+  update(time: number, state: IState, keys: Keys): IPlayer;
+}
+
+type Ch = "." | "#" | "+" | "@" | "o" | "=" | "|" | "v";
+
+type Keys = Record<"ArrowLeft" | "ArrowRight" | "ArrowUp", boolean>;
+
+type ICreate<T extends IActor> = {
+  create: (pos: IVec, ch?: Ch) => T;
+};
+
+type GameElement = "empty" | "wall" | "lava" | ICreate<IActor>;
+
+export type {
+  ICreate,
+  IVec,
+  IActor,
+  ILevel,
+  IState,
+  ICoin,
+  ILava,
+  Ch,
+  IPlayer,
+  Keys,
+  GameElement,
+};

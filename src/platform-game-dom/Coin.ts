@@ -1,5 +1,5 @@
 import Vec from "./Vec";
-import type { IVec, IState, ICoin } from "./types";
+import type { IVec, IState, ICoin, ICreate } from "./types";
 import State from "./State";
 
 const size = new Vec(0.6, 0.6);
@@ -41,4 +41,6 @@ class Coin implements ICoin {
   }
 }
 
-export default Coin;
+const actor: ICreate<ICoin> = Coin;
+
+export default actor;
