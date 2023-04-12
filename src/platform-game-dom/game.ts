@@ -1,24 +1,11 @@
+import type { Display, ILevel, IState } from "./types";
 import Level from "./Level";
 import State from "./State";
+import pressedKeys from "./pressedKeys";
 
-function trackKeys(keys) {
-  let down = Object.create(null);
-  function track(event) {
-    if (keys.includes(event.key)) {
-      down[event.key] = event.type == "keydown";
-      event.preventDefault();
-    }
-  }
-  window.addEventListener("keydown", track);
-  window.addEventListener("keyup", track);
-  return down;
-}
-
-var arrowKeys = trackKeys(["ArrowLeft", "ArrowRight", "ArrowUp"]);
-
-function runAnimation(frameFunc) {
-  let lastTime = null;
-  function frame(time) {
+function runAnimation(frameFunc: (time: number) => boolean): void {
+  let lastTime: number = null;
+  function frame(time: number) {
     if (lastTime != null) {
       let timeStep = Math.min(time - lastTime, 100) / 1000;
       if (frameFunc(timeStep) === false) return;
@@ -29,13 +16,13 @@ function runAnimation(frameFunc) {
   requestAnimationFrame(frame);
 }
 
-function runLevel(level, Display) {
+function runLevel(level: ILevel, Display: Display): Promise<IState["status"]> {
   let display = new Display(document.body, level);
   let state = State.start(level);
   let ending = 1;
   return new Promise((resolve) => {
-    runAnimation((time) => {
-      state = state.update(time, arrowKeys);
+    runAnimation((time: number) => {
+      state = state.update(time, pressedKeys);
       display.syncState(state);
       if (state.status == "playing") {
         return true;
@@ -51,7 +38,7 @@ function runLevel(level, Display) {
   });
 }
 
-async function runGame(plans, Display) {
+async function runGame(plans: string[], Display: Display): Promise<void> {
   for (let level = 0; level < plans.length; ) {
     let status = await runLevel(new Level(plans[level]), Display);
     if (status == "won") level++;

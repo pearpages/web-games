@@ -1,5 +1,5 @@
 import Vec from "./Vec";
-import type { ICreate, IPlayer, IState, IVec, Keys } from "./types";
+import type { ICreate, IPlayer, IState, IVec, PressedKeys } from "./types";
 
 const size = new Vec(0.8, 1.5);
 const playerXSpeed = 7;
@@ -25,7 +25,7 @@ class Player implements IPlayer {
     return state;
   }
 
-  update(time: number, state: IState, keys: Keys): IPlayer {
+  update(time: number, state: IState, keys: PressedKeys): IPlayer {
     let xSpeed = 0;
     if (keys.ArrowLeft) xSpeed -= playerXSpeed;
     if (keys.ArrowRight) xSpeed += playerXSpeed;
