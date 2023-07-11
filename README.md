@@ -1,4 +1,4 @@
-# javascript for kids
+# Games
 
 This project has been created using **webpack-cli**, you 
 
@@ -19,3 +19,5 @@ npx tsc --init
 ```
 .vscode/settings.json
 ```
+
+This project is a remake of the older one [https://github.com/pearpages/games](https://github.com/pearpages/games)
